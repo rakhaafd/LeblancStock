@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="public/logo/leblanc.png">
+    <link rel="stylesheet" href="src/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <title>LeblancStock.</title>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class=" background-color: #2E2E2E text-[#F5E8C7] p-6 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-3xl font-bold">LeblancStock</h1>
+            <p class="text-sm italic">Manajemen Stok LeblancCafe</p>
+        </div>
+    </header>
+
+    <!-- Konten Utama -->
+    <main class="container mx-auto p-6 md:p-8 flex-grow">
+        <!-- Form Tambah Cabang -->
+        <section class="mb-10 section-container p-6 md:p-8 rounded-xl shadow-lg">
+            <h2 class="text-2xl font-semibold mb-6">Kelola Cabang</h2>
+            <div class="flex flex-col gap-4">
+                <input id="branchName" type="text" placeholder="Masukkan Nama Cabang" class="p-4 rounded-md w-full">
+                <button id="addBranchBtn" class="btn bg-[#D4A017] text-[#1C2526] px-6 py-3 rounded-md font-semibold hover:bg-[#F5E8C7] transition">Tambah Cabang</button>
+            </div>
+        </section>
+
+        <!-- Form Tambah Barang -->
+        <section class="mb-10 section-container p-6 md:p-8 rounded-xl shadow-lg">
+            <h2 class="text-2xl font-semibold mb-6">Tambah Barang ke Stok Pusat</h2>
+            <div class="flex flex-col gap-4">
+                <input id="itemName" type="text" placeholder="Nama Barang" class="p-4 rounded-md w-full">
+                <input id="itemPrice" type="number" placeholder="Harga Satuan" min="0" class="p-4 rounded-md w-full">
+                <input id="itemQuantity" type="number" placeholder="Jumlah" min="0" class="p-4 rounded-md w-full">
+                <div class="file-input-container">
+                    <input id="itemImage" type="file" accept="image/png,image/jpeg" class="p-4 rounded-md w-full">
+                    <div id="fileNameContainer" class="file-name-container hidden">
+                        <span id="fileName" class="file-name"></span>
+                        <span id="removeImage" class="remove-image">X</span>
+                    </div>
+                </div>
+                <div id="imagePreview" class="image-preview hidden">
+                    <img id="previewImage" src="" alt="Pratinjau Gambar" class="card-image max-w-[150px]">
+                </div>
+                <button id="addItemBtn" class="btn bg-[#D4A017] text-[#1C2526] px-6 py-3 rounded-md font-semibold hover:bg-[#F5E8C7] transition">Simpan</button>
+            </div>
+        </section>
+
+        <!-- Bagian Stok -->
+        <div id="stockSections" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            <!-- Stok Pusat -->
+            <section class="section-container p-6 md:p-8 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-semibold mb-6">Stok Pusat</h2>
+                <div id="centralStock" class="space-y-6"></div>
+            </section>
+            <!-- Bagian Cabang Dinamis -->
+        </div>
+    </main>
+
+    <!-- Modal Pindah Stok -->
+    <div id="moveModal" class="fixed inset-0 bg-black bg-opacity-60 hidden flex items-center justify-center modal">
+        <div class="section-container p-8 rounded-xl shadow-lg w-full max-w-sm">
+            <h2 id="modalTitle" class="text-xl font-semibold mb-4"></h2>
+            <p id="modalStockInfo" class="mb-4"></p>
+            <input id="moveQuantity" type="number" min="1" placeholder="Jumlah yang Dipindahkan" class="p-4 rounded-md w-full mb-4">
+            <p id="totalPrice" class="mb-4"></p>
+            <div class="flex justify-end gap-4">
+                <button id="cancelMoveBtn" class="btn bg-[#2E2E2E] text-[#F5E8C7] px-4 py-2 rounded-md hover:bg-[#3F3F3F] transition">Batal</button>
+                <button id="confirmMoveBtn" class="btn bg-[#D4A017] text-[#1C2526] px-4 py-2 rounded-md hover:bg-[#F5E8C7] transition">Pindahkan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Edit Barang -->
+    <div id="editModal" class="fixed inset-0 bg-black bg-opacity-60 hidden flex items-center justify-center modal">
+        <div class="section-container p-8 rounded-xl shadow-lg w-full max-w-sm">
+            <h2 class="text-xl font-semibold mb-4">Edit Barang</h2>
+            <input id="editName" type="text" placeholder="Nama Barang" class="p-4 rounded-md w-full mb-4">
+            <input id="editPrice" type="number" placeholder="Harga Satuan" min="0" class="p-4 rounded-md w-full mb-4">
+            <input id="editQuantity" type="number" placeholder="Jumlah" min="0" class="p-4 rounded-md w-full mb-4">
+            <input id="editImage" type="file" accept="image/png,image/jpeg" class="p-4 rounded-md w-full mb-4">
+            <div id="editImagePreview" class="image-preview hidden">
+                <img id="editPreviewImage" src="" alt="Pratinjau Gambar" class="card-image max-w-[150px]">
+                <span id="editRemoveImage" class="remove-image">X</span>
+            </div>
+            <div class="flex justify-end gap-4">
+                <button id="cancelEditBtn" class="btn bg-[#2E2E2E] text-[#F5E8C7] px-4 py-2 rounded-md hover:bg-[#3F3F3F] transition">Batal</button>
+                <button id="confirmEditBtn" class="btn bg-[#D4A017] text-[#1C2526] px-4 py-2 rounded-md hover:bg-[#F5E8C7] transition">Simpan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-[#2E2E2E] text-[#F5E8C7] p-6 text-center">
+        <p>© 2025 LeblancStock.</p>
+    </footer>
+
+    <script src="src/js/script.js"></script>
+</body>
+</html>

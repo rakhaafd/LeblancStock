@@ -1,0 +1,66 @@
+body {
+    background-color: #1C2526;
+    color: #F5E8C7;
+    font-family: 'Montserrat', sans-serif;
+    background-image: linear-gradient(rgba(74, 55, 40, 0.1), rgba(74, 55, 40, 0.1));
+}
+
+h1,
+h2,
+h3 {
+    font-family: 'Playfair Display', serif;
+}
+
+.section-container {
+    background-color: #4A3728;
+}
+
+.card {
+    background-color: #3A2A1C;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.btn {
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(212, 160, 23, 0.5);
+    border-color: #D4A017;
+}
+
+.modal {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+input,
+select {
+    background-color: #2E2E2E;
+    color: #F5E8C7;
+    border: 1px solid #D4A017;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #F5E8C7;
+    box-shadow: 0 0 5px rgba(212, 160, 23, 0.5);
+}
